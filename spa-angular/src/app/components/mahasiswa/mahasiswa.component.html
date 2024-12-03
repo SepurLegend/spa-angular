@@ -1,0 +1,57 @@
+<div class="container mt-4">
+  <h2>Data Mahasiswa</h2>
+  <!-- Loader -->
+  <div class="d-flex justify-content-center mt-4" *ngIf="isLoading">
+    <!-- Loader ditampilkan jika properti `isLoading` bernilai true -->
+    <div class="spinner-border text-primary" role="status">
+      <!-- Komponen spinner Bootstrap untuk menampilkan animasi loading -->
+      <span class="visually-hidden">Loading...</span>
+      <!-- Teks alternatif untuk pembaca layar, membantu aksesibilitas -->
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading" class="row">
+    <div
+      *ngFor="let item of mahasiswa"
+      class="col-lg-4 mb-4 d-flex justify-content-center"
+    >
+      <div class="card card-profile text-center rounded-4">
+        <div class="card-body">
+          <!-- <img
+              src="{{ item.foto }}"
+              alt="Avatar"
+              class="avatar img-fluid"
+              style="width: 60px; height: 60px; margin: auto"
+            /> -->
+          <h3 class="fs-5 fw-bold mt-2 mb-0">{{ item.nama }}</h3>
+          <span class="text-secondary d-block">{{ item.npm }}</span>
+          <span class="text-secondary d-block mb-3">{{
+            item.jenis_kelamin == "L" ? "Laki - Laki" : "Perempuan"
+          }}</span>
+        </div>
+        <div class="border-top d-flex">
+          <div
+            class="d-flex flex-column col-6 justify-content-center align-items-center p-3 flex-fill position-relative"
+          >
+            <div class="text-secondary fw-medium small">Jurusan</div>
+            <p class="mb-1 text-bold fw-medium small">
+              {{ item.prodi_id.nama }}
+            </p>
+            <div
+              class="border-end position-absolute end-0 top-50 translate-middle-y"
+              style="height: 50%"
+            ></div>
+          </div>
+          <div
+            class="d-flex flex-column col-6 justify-content-center align-items-center p-3 flex-fill"
+          >
+            <div class="text-secondary fw-medium small">Asal Sekolah</div>
+            <p class="mb-1 text-bold fw-medium small">
+              {{ item.asal_sekolah }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

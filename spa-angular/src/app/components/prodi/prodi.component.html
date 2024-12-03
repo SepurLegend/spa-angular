@@ -1,0 +1,34 @@
+<div class="container mt-4">
+  <h2>Data Prodi</h2>
+
+  <!-- Loader -->
+  <div class="d-flex justify-content-center mt-4" *ngIf="isLoading">
+    <!-- Loader ditampilkan jika properti `isLoading` bernilai true -->
+    <div class="spinner-border text-primary" role="status">
+      <!-- Komponen spinner Bootstrap untuk menampilkan animasi loading -->
+      <span class="visually-hidden">Loading...</span>
+      <!-- Teks alternatif untuk pembaca layar, membantu aksesibilitas -->
+    </div>
+  </div>
+
+  <table class="table table-bordered table-striped" *ngIf="!isLoading">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nama Prodi</th>
+        <th>Singkatan</th>
+        <th>Fakultas</th>
+        <!-- <th>Aksi</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data Prodi akan di-loop di sini -->
+      <tr *ngFor="let item of prodi; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.nama }}</td>
+        <td>{{ item.singkatan }}</td>
+        <td>{{ item.fakultas_id.nama }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
