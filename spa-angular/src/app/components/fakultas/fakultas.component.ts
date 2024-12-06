@@ -13,7 +13,7 @@ import * as bootstrap from 'bootstrap';
 })
 export class FakultasComponent implements OnInit {  // Deklarasi komponen dengan mengimplementasikan lifecycle hook OnInit
   fakultas: any[] = [];  // Mendeklarasikan properti fakultas yang akan menyimpan data yang diterima dari API
-  apiUrl = 'https://express-generator-beta.vercel.app/api/fakultas';  // URL API yang digunakan untuk mendapatkan data fakultas
+  apiUrl = 'https://belajar-express-generator.vercel.app/api/fakultas';  // URL API yang digunakan untuk mendapatkan data fakultas
   isLoading = true;  // Properti untuk status loading, digunakan untuk menunjukkan loader saat data sedang diambil
 
   fakultasForm: FormGroup;  // Tambahkan untuk mengelola data formulir
