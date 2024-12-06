@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http'; // Mengimpor HttpClient untuk
 export class ProdiComponent implements OnInit {
   // Deklarasi komponen dengan mengimplementasikan lifecycle hook OnInit
   prodi: any[] = []; // Mendeklarasikan properti prodi yang akan menyimpan data yang diterima dari API
-  apiUrl = 'https://belajar-express-generator.vercel.app/api/prodi'; // URL API yang digunakan untuk mendapatkan data prodi
+  apiUrl = 'https://express-generator-beta.vercel.app/api/'; // URL API yang digunakan untuk mendapatkan data prodi
   // apiUrl = 'https://crud-express-seven.vercel.app/api/prodi';
   isLoading = true; // Properti untuk status loading, digunakan untuk menunjukkan loader saat data sedang diambil
 

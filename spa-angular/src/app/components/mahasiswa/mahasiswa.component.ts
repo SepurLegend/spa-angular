@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http'; // Mengimpor HttpClient untuk
 export class MahasiswaComponent implements OnInit {
   // Deklarasi komponen dengan mengimplementasikan lifecycle hook OnInit
   mahasiswa: any[] = []; // Mendeklarasikan properti mahasiswa yang akan menyimpan data yang diterima dari API
-  apiUrl = 'https://belajar-express-generator.vercel.app/api/mahasiswa'; // URL API yang digunakan untuk mendapatkan data mahasiswa
+  apiUrl = 'https://express-generator-beta.vercel.app/api/mahasiswa'; // URL API yang digunakan untuk mendapatkan data mahasiswa
   // apiUrl = 'https://crud-express-seven.vercel.app/api/mahasiswa';
   isLoading = true; // Properti untuk status loading, digunakan untuk menunjukkan loader saat data sedang diambil
 
