@@ -1,25 +1,14 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-prodi',
-//   standalone: true,
-//   imports: [],
-//   templateUrl: './prodi.component.html',
-//   styleUrl: './prodi.component.css'
-// })
-// export class ProdiComponent {
-
-// }
 import { CommonModule } from '@angular/common'; // Mengimpor modul Angular yang menyediakan direktif umum seperti ngIf, ngFor, dll.
 import { Component, OnInit, inject } from '@angular/core'; // Mengimpor decorator Component, interface OnInit untuk inisialisasi, dan inject untuk injeksi dependency.
 import { HttpClient } from '@angular/common/http'; // Mengimpor HttpClient untuk melakukan HTTP request ke server.
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'; // Mengimpor modul dan class untuk membuat formulir reaktif.
 import * as bootstrap from 'bootstrap'; // Mengimpor Bootstrap untuk manipulasi modal dan elemen lainnya.
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-prodi', // Selector untuk komponen ini digunakan dalam template HTML.
   standalone: true, // Menjadikan komponen ini sebagai standalone, tanpa bagian dari modul Angular lainnya.
-  imports: [CommonModule, ReactiveFormsModule], // Mengimpor modul Angular yang dibutuhkan untuk komponen ini.
+  imports: [CommonModule, ReactiveFormsModule, NgxPaginationModule], // Mengimpor modul Angular yang dibutuhkan untuk komponen ini.
   templateUrl: './prodi.component.html', // Lokasi file template HTML untuk komponen ini.
   styleUrls: ['./prodi.component.css'] // Lokasi file CSS untuk komponen ini.
 })
@@ -31,6 +20,9 @@ export class ProdiComponent implements OnInit { // Mendeklarasikan class kompone
   isLoading = true; // Indikator loading data dari API.
   prodiForm: FormGroup; // Form group untuk formulir reaktif prodi.
   isSubmitting = false; // Indikator proses pengiriman data.
+
+  currentPage = 1;
+  itemsPerPage = 5;
 
   private http = inject(HttpClient); // Menggunakan Angular inject API untuk menyuntikkan HttpClient.
   private fb = inject(FormBuilder); // Menyuntikkan FormBuilder untuk membangun form reaktif.
@@ -112,21 +104,20 @@ export class ProdiComponent implements OnInit { // Mendeklarasikan class kompone
       });
     }
   }
-  // Method untuk menghapus prodi
-deleteProdi(_id: string): void {
-  if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { // Konfirmasi penghapusan
-    this.http.delete(`${this.apiProdiUrl}/${_id}`).subscribe({
-      next: () => {
-        console.log(`Prodi dengan ID ${_id} berhasil dihapus`);
-        this.getProdi(); // Refresh data prodi setelah penghapusan
-      },
-      error: (err) => {
-        console.error('Error menghapus prodi:', err); // Log error jika penghapusan gagal
-      }
-    });
+  deleteProdi(_id: string): void {
+    if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { // Konfirmasi penghapusan
+      this.http.delete(`${this.apiProdiUrl}/${_id}`).subscribe({
+        next: () => {
+          console.log(`Prodi dengan ID ${_id} berhasil dihapus`);
+          this.getProdi(); // Refresh data prodi setelah penghapusan
+        },
+        error: (err) => {
+          console.error('Error menghapus prodi:', err); // Log error jika penghapusan gagal
+        }
+      });
+    }
   }
-}
-editProdiId: string | null = null; // ID prodi yang sedang diubah
+  editProdiId: string | null = null; // ID prodi yang sedang diubah
 
   // Method untuk mendapatkan data prodi berdasarkan ID
   getProdiById(_id: string): void {
@@ -176,5 +167,5 @@ editProdiId: string | null = null; // ID prodi yang sedang diubah
         },
       });
     }
-  }
+  } 
 }
