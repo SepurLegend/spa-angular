@@ -3,11 +3,12 @@ import { Component, OnInit, inject } from '@angular/core'; // Mengimpor decorato
 import { HttpClient } from '@angular/common/http'; // Mengimpor HttpClient untuk melakukan HTTP request ke server.
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'; // Mengimpor modul dan class untuk membuat formulir reaktif.
 import * as bootstrap from 'bootstrap'; // Mengimpor Bootstrap untuk manipulasi modal dan elemen lainnya.
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-prodi', // Selector untuk komponen ini digunakan dalam template HTML.
   standalone: true, // Menjadikan komponen ini sebagai standalone, tanpa bagian dari modul Angular lainnya.
-  imports: [CommonModule, ReactiveFormsModule], // Mengimpor modul Angular yang dibutuhkan untuk komponen ini.
+  imports: [CommonModule, ReactiveFormsModule, NgxPaginationModule], // Mengimpor modul Angular yang dibutuhkan untuk komponen ini.
   templateUrl: './prodi.component.html', // Lokasi file template HTML untuk komponen ini.
   styleUrls: ['./prodi.component.css'] // Lokasi file CSS untuk komponen ini.
 })
@@ -19,6 +20,9 @@ export class ProdiComponent implements OnInit { // Mendeklarasikan class kompone
   isLoading = true; // Indikator loading data dari API.
   prodiForm: FormGroup; // Form group untuk formulir reaktif prodi.
   isSubmitting = false; // Indikator proses pengiriman data.
+
+  currentPage = 1;
+  itemsPerPage = 5;
 
   private http = inject(HttpClient); // Menggunakan Angular inject API untuk menyuntikkan HttpClient.
   private fb = inject(FormBuilder); // Menyuntikkan FormBuilder untuk membangun form reaktif.
