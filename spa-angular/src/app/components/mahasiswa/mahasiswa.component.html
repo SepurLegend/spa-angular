@@ -1,57 +1,133 @@
+<!-- <div class="container my-5">
+    <h2>Data Mahasiswa</h2>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Mahasiswa</th>
+          <th>Npm</th>
+          <th>Fakultas</th>
+          <th>Prodi</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Fitri Aulianisa</td>
+          <td>2226240118</td>
+          <td>Fakultas Ilmu Komputer dan Rekayasa</td>
+          <td>Sistem Informasi</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
+
+ 
+  <!-- <div class="container mt-5">
+    
+    <h2>Data Mahasiswa</h2>
+    <div class="row">
+      Card Mahasiswa 1
+     
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <img src="https://via.placeholder.com/150" class="card-img-top" alt="Foto Mahasiswa 1">
+          <div class="card-body">
+            <h5 class="card-title">Fitri Aulianisa</h5>
+            <p class="card-text"><strong>NPM:</strong> 2226240118</p>
+            <p class="card-text"><strong>Prodi:</strong> Sistem Informasi </p>
+            <p class="card-text"><strong>Jenis Kelamin:</strong> Perempuan </p>
+            
+          </div>
+        </div>
+      </div>
+
+      Card Mahasiswa 2
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <img src="https://via.placeholder.com/150" class="card-img-top" alt="Foto Mahasiswa 2">
+          <div class="card-body">
+            <h5 class="card-title">Johndoe</h5>
+            <p class="card-text"><strong>NPM:</strong> 2228907645</p>
+            <p class="card-text"><strong>Prodi:</strong> Teknik Elektro</p>
+            <p class="card-text"><strong>Jenis Kelamin:</strong> Laki-laki</p>
+          
+      </div>
+    </div>
+  </div>
+
+  Card Mahasiswa 3
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <img src="https://via.placeholder.com/150" class="card-img-top" alt="Foto Mahasiswa 3">
+      <div class="card-body">
+        <h5 class="card-title">Rafael struick</h5>
+        <p class="card-text"><strong>NPM:</strong> 2226240909</p>
+        <p class="card-text"><strong>Prodi:</strong> Akuntansi </p>
+        <p class="card-text"><strong>Jenis Kelamin:</strong> Laki-laki</p>
+      </div>
+    </div>
+  </div>
+  Card Mahasiswa 4
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <img src="https://via.placeholder.com/150" class="card-img-top" alt="Foto Mahasiswa 4">
+      <div class="card-body">
+        <h5 class="card-title">Nathan Tjoe</h5>
+        <p class="card-text"><strong>NPM:</strong> 2226240999</p>
+        <p class="card-text"><strong>Prodi:</strong> Informatika </p>
+        <p class="card-text"><strong>Jenis Kelamin:</strong> Laki-laki</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div> -->
 <div class="container mt-4">
-  <h2>Data Mahasiswa</h2>
+  <h2>Daftar Mahasiswa</h2>
+
+  <!-- Loader -->
+  <div class="d-flex justify-content-center mt-4" *ngIf="isLoading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
 
   <!-- Tombol untuk membuka modal -->
   <button
     type="button"
     class="btn btn-primary mb-3"
     data-bs-toggle="modal"
-    data-bs-target="#tambahMahasiswaModal"
+    data-bs-target="#mahasiswaModal"
+    (click)="resetForm()"
   >
     Tambah Mahasiswa
   </button>
-  <!-- Tombol dengan Bootstrap yang membuka modal menggunakan atribut `data-bs-toggle` dan `data-bs-target`. -->
 
-  <!-- Modal Tambah Prodi -->
+  <!-- Modal Mahasiswa -->
   <div
     class="modal fade"
-    id="tambahMahasiswaModal"
+    id="mahasiswaModal"
     tabindex="-1"
-    aria-labelledby="tambahMahasiswaModalLabel"
+    aria-labelledby="mahasiswaModalLabel"
     aria-hidden="true"
   >
-    <!-- Modal Bootstrap dengan ID unik untuk menampilkan formulir tambah prodi. -->
     <div class="modal-dialog">
-      <!-- Dialog modal dengan layout default Bootstrap. -->
       <div class="modal-content">
-        <!-- Konten modal -->
         <div class="modal-header">
-          <!-- Header modal -->
-          <h5 class="modal-title" id="tambahMahasiswaModalLabel">
-            Tambah Mahasiswa
+          <h5 class="modal-title" id="mahasiswaModalLabel">
+            {{ isEditing ? 'Edit Mahasiswa' : 'Tambah Mahasiswa' }}
           </h5>
-          <!-- Judul modal -->
           <button
             type="button"
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
-          <!-- Tombol untuk menutup modal -->
         </div>
         <div class="modal-body">
-          <!-- Bagian isi modal -->
           <form [formGroup]="mahasiswaForm" (ngSubmit)="addMahasiswa()">
-            <!-- Form Angular yang terhubung dengan `mahasiswaForm`. -->
-            <div class="mb-3">
-              <label for="npm" class="form-label">NPM</label>
-              <input
-                id="npm"
-                type="text"
-                class="form-control"
-                formControlName="npm"
-              />
-            </div>
             <div class="mb-3">
               <label for="nama" class="form-label">Nama</label>
               <input
@@ -62,14 +138,28 @@
               />
             </div>
             <div class="mb-3">
-              <label for="jenis_kelamin" class="form-label">jenis_kelamin</label>
-              <select name="" id="jenis_kelamin" class="form-select" formControlName="jenis_kelamin">
-                <option value="L">Laki - Laki</option>
+              <label for="npm" class="form-label">NPM</label>
+              <input
+                id="npm"
+                type="text"
+                class="form-control"
+                formControlName="npm"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+              <select
+                id="jenis_kelamin"
+                class="form-select"
+                formControlName="jenis_kelamin"
+              >
+                <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                <option value="L">Laki-Laki</option>
                 <option value="P">Perempuan</option>
               </select>
             </div>
             <div class="mb-3">
-              <label for="asal_sekolah" class="form-label">asal_sekolah</label>
+              <label for="asal_sekolah" class="form-label">Asal Sekolah</label>
               <input
                 id="asal_sekolah"
                 type="text"
@@ -78,28 +168,19 @@
               />
             </div>
             <div class="mb-3">
-              <label for="foto" class="form-label">foto</label>
-              <input
-                id="foto"
-                type="file"
-                class="form-control"
-                formControlName="foto"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="prodi" class="form-label">Prodi</label>
+              <label for="prodi_id" class="form-label">Program Studi</label>
               <select
-                id="prodi"
+                id="prodi_id"
                 class="form-select"
                 formControlName="prodi_id"
               >
+                <option value="" disabled selected>Pilih Program Studi</option>
                 <option
                   *ngFor="let prodi of prodi"
                   [value]="prodi._id"
                 >
                   {{ prodi.nama }}
                 </option>
-                <!-- Menggunakan *ngFor untuk membuat opsi dropdown berdasarkan data fakultas. -->
               </select>
             </div>
             <button
@@ -107,70 +188,56 @@
               class="btn btn-primary"
               [disabled]="isSubmitting"
             >
-              {{ isSubmitting ? "Menyimpan..." : "Tambah Prodi" }}
+              {{ isSubmitting ? "Menyimpan..." : (isEditing ? "Simpan Perubahan" : "Tambah Mahasiswa") }}
             </button>
-            <!-- Tombol submit dengan state dinamis berdasarkan isSubmitting. -->
           </form>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Loader -->
-  <div class="d-flex justify-content-center mt-4" *ngIf="isLoading">
-    <!-- Loader ditampilkan jika properti `isLoading` bernilai true -->
-    <div class="spinner-border text-primary" role="status">
-      <!-- Komponen spinner Bootstrap untuk menampilkan animasi loading -->
-      <span class="visually-hidden">Loading...</span>
-      <!-- Teks alternatif untuk pembaca layar, membantu aksesibilitas -->
-    </div>
-  </div>
-  
-  <div *ngIf="!isLoading" class="row">
-    <div
-      *ngFor="let item of mahasiswa | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; index as i"
-      class="col-lg-4 mb-4 d-flex justify-content-center"
-    >
-      <div class="card card-profile text-center rounded-4 w-100">
-        <div class="card-body">
-          <!-- <img
-              src="{{ item.foto }}"
-              alt="Avatar"
-              class="avatar img-fluid"
-              style="width: 60px; height: 60px; margin: auto"
-            /> -->
-          <h3 class="fs-5 fw-bold mt-2 mb-0">{{ item.nama }}</h3>
-          <span class="text-secondary d-block">{{ item.npm }}</span>
-          <span class="text-secondary d-block mb-3">{{
-            item.jenis_kelamin == "L" ? "Laki - Laki" : "Perempuan"
-          }}</span>
-        </div>
-        <div class="border-top d-flex">
-          <div
-            class="d-flex flex-column col-6 justify-content-center align-items-center p-3 flex-fill position-relative"
-          >
-            <div class="text-secondary fw-medium small">Jurusan</div>
-            <p class="mb-1 text-bold fw-medium small">
-              {{ item.prodi_id.nama }}
-            </p>
-            <div
-              class="border-end position-absolute end-0 top-50 translate-middle-y"
-              style="height: 50%"
-            ></div>
-          </div>
-          <div
-            class="d-flex flex-column col-6 justify-content-center align-items-center p-3 flex-fill"
-          >
-            <div class="text-secondary fw-medium small">Asal Sekolah</div>
-            <p class="mb-1 text-bold fw-medium small">
-              {{ item.asal_sekolah }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <pagination-controls (pageChange)="currentPage = $event">
-    </pagination-controls>
+  <!-- Tabel Data Mahasiswa -->
+  <div class="table-responsive" *ngIf="!isLoading">
+    <table class="table table-striped table-bordered mt-4">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>NPM</th>
+          <th>Jenis Kelamin</th>
+          <th>Asal Sekolah</th>
+          <th>Program Studi</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mahasiswa; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.nama }}</td>
+          <td>{{ item.npm }}</td>
+          <td>
+            {{ item.jenis_kelamin === 'L' ? 'Laki-Laki' : 'Perempuan' }}
+          </td>
+          <td>{{ item.asal_sekolah }}</td>
+          <td>{{ item.prodi_id?.nama }}</td>
+          <td>
+            <button
+              class="btn btn-warning btn-sm me-2"
+              (click)="editMahasiswa(item)"
+              data-bs-toggle="modal"
+              data-bs-target="#mahasiswaModal"
+            >
+              Edit
+            </button>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="deleteMahasiswa(item._id)"
+            >
+              Hapus
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
