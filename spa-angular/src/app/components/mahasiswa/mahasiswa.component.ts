@@ -108,15 +108,11 @@ export class MahasiswaComponent implements OnInit {
       this.isEditing = true;
       const token = localStorage.getItem('authToken');
       const headers = {Authorization: `Bearer ${token}`};
-      this.selectedMahasiswaId = mahasiswa._id;
-      this.mahasiswaForm.patchValue(mahasiswa);
-
       this.http.put(`${this.apiMahasiswaUrl}/${this.editMahasiswaId}`, this.mahasiswaForm.value, { headers }).subscribe({
         next: (response) => {
           console.log('Mahasiswa berhasil diperbarui:', response);
           this.getMahasiswa(); // Refresh data Mahasiswa
           this.isEditing = false;
-          this.closeModal('mahasiswaModalLabel');
 
           // Tutup modal edit setelah data berhasil diupdate
           const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
