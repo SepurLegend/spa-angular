@@ -112,24 +112,24 @@ export class MahasiswaComponent implements OnInit {
       this.mahasiswaForm.patchValue(mahasiswa);
 
       this.http.put(`${this.apiMahasiswaUrl}/${this.editMahasiswaId}`, this.mahasiswaForm.value, { headers }).subscribe({
-              next: (response) => {
-                console.log('Mahasiswa berhasil diperbarui:', response);
-                this.getMahasiswa(); 
-                this.isEditing = false;
-      
-                // Tutup modal edit setelah data berhasil diupdate
-                const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
-                if (modalElement) {
-                  const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                  modalInstance?.hide();
-                }
-              },
-              error: (err) => {
-                console.error('Error updating mahasiswa:', err);
-                this.isSubmitting = false;
-              },
-            });
+        next: (response) => {
+          console.log('Mahasiswa berhasil diperbarui:', response);
+          this.getMahasiswa(); // Refresh data Mahasiswa
+          this.isSubmitting = false;
+
+          // Tutup modal edit setelah data berhasil diupdate
+          const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
+          if (modalElement) {
+            const modalInstance = bootstrap.Modal.getInstance(modalElement);
+            modalInstance?.hide();
           }
+        },
+        error: (err) => {
+          console.error('Error updating mahasiswa:', err);
+          this.isSubmitting = false;
+        },
+      });
+    }
   }
 
   deleteMahasiswa(id: string): void {
