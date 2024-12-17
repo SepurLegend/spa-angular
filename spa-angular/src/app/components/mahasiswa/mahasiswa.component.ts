@@ -103,7 +103,7 @@ export class MahasiswaComponent implements OnInit {
     }
   }
 
-  updateMahasiswa(mahasiswa: any): void {
+  editMahasiswa(mahasiswa: any): void {
     if (this.mahasiswaForm.valid && this.editMahasiswaId) {
       this.isEditing = true;
       const token = localStorage.getItem('authToken');
