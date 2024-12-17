@@ -93,7 +93,7 @@ export class MahasiswaComponent implements OnInit {
           console.log('Mahasiswa berhasil disimpan:', response);
           this.getMahasiswa();
           this.resetForm();
-          this.closeModal('mahasiswaModalLabel');
+          this.closeModal('tambahModal');
         },
         error: (err) => {
           console.error('Error menyimpan mahasiswa:', err);
@@ -104,7 +104,7 @@ export class MahasiswaComponent implements OnInit {
   }
 
   editMahasiswa(mahasiswa: any): void {
-    if (this.mahasiswaForm.valid && this.editMahasiswaId) {
+    if (this.mahasiswaForm.valid) {
       this.isEditing = true;
       const token = localStorage.getItem('authToken');
       const headers = {Authorization: `Bearer ${token}`};
