@@ -14,8 +14,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import bootstrap from 'bootstrap';
-// import * as bootstrap from 'bootstrap';
+import * as bootstrap from 'bootstrap';
 // import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
