@@ -106,7 +106,11 @@ export class ProdiComponent implements OnInit { // Mendeklarasikan class kompone
   }
   deleteProdi(_id: string): void {
     if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { // Konfirmasi penghapusan
-      this.http.delete(`${this.apiProdiUrl}/${_id}`).subscribe({
+
+      const token = localStorage.getItem('Auth Token ');
+      const headers= {Authorization: `Bearer ${token}`};
+      
+      this.http.delete(`${this.apiProdiUrl}/${_id}`, { headers }).subscribe({
         next: () => {
           console.log(`Prodi dengan ID ${_id} berhasil dihapus`);
           this.getProdi(); // Refresh data prodi setelah penghapusan
