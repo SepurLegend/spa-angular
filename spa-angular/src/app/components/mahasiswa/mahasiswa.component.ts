@@ -93,6 +93,7 @@ export class MahasiswaComponent implements OnInit {
           console.log('Mahasiswa berhasil disimpan:', response);
           this.getMahasiswa();
           this.resetForm();
+          this.closeModal('tambahMahasiswaModal');
         },
         error: (err) => {
           console.error('Error menyimpan mahasiswa:', err);
@@ -115,6 +116,7 @@ export class MahasiswaComponent implements OnInit {
           console.log('Mahasiswa berhasil diperbarui:', response);
           this.getMahasiswa(); // Refresh data Mahasiswa
           this.isEditing = false;
+          this.closeModal('tambahMahasiswaModal');
 
           // Tutup modal edit setelah data berhasil diupdate
           const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
@@ -153,4 +155,22 @@ export class MahasiswaComponent implements OnInit {
     this.isEditing = false;
     this.selectedMahasiswaId = null;
   }
+  private closeModal(modalId: string): void {
+      const modalElement = document.getElementById(modalId) as HTMLElement;
+      if (modalElement) {
+        const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+        modalInstance.hide();
+  
+        // Hapus elemen backdrop jika ada
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+          backdrop.remove();
+        }
+  
+        // Pulihkan scroll pada body
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+      }
+    }
 }
