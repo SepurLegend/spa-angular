@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import bootstrap from 'bootstrap';
 // import * as bootstrap from 'bootstrap';
 // import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -77,12 +78,16 @@ export class MahasiswaComponent implements OnInit {
     });
   }
 
+  editMahasiswaId: string | null = null;
+
   addMahasiswa(): void {
     if (this.mahasiswaForm.valid) {
-      this.isSubmitting = true;
+      this.isSubmitting = true; 
+      const token = localStorage.getItem('authToken');
+      const headers = {Authorization: `Bearer ${token}`};
       const method = this.isEditing
         ? this.http.put(`${this.apiMahasiswaUrl}/${this.selectedMahasiswaId}`, this.mahasiswaForm.value)
-        : this.http.post(this.apiMahasiswaUrl, this.mahasiswaForm.value);
+        : this.http.post(this.apiMahasiswaUrl, this.mahasiswaForm.value, {headers});
 
       method.subscribe({
         next: (response) => {
@@ -100,13 +105,37 @@ export class MahasiswaComponent implements OnInit {
 
   editMahasiswa(mahasiswa: any): void {
     this.isEditing = true;
+    const token = localStorage.getItem('authToken');
+    const headers = {Authorization: `Bearer ${token}`};
     this.selectedMahasiswaId = mahasiswa._id;
     this.mahasiswaForm.patchValue(mahasiswa);
+
+    this.http.put(`${this.apiMahasiswaUrl}/${this.editMahasiswaId}`, this.mahasiswaForm.value, { headers }).subscribe({
+            next: (response) => {
+              console.log('Mahasiswa berhasil diperbarui:', response);
+              this.getMahasiswa(); 
+              this.isEditing = false;
+    
+              // Tutup modal edit setelah data berhasil diupdate
+              const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
+              if (modalElement) {
+                const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                modalInstance?.hide();
+              }
+            },
+            error: (err) => {
+              console.error('Error updating mahasiswa:', err);
+              this.isSubmitting = false;
+            },
+          });
+
   }
 
   deleteMahasiswa(id: string): void {
     if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-      this.http.delete(`${this.apiMahasiswaUrl}/${id}`).subscribe({
+      const token = localStorage.getItem('authToken');
+      const headers = {Authorization: `Bearer ${token}`};
+      this.http.delete(`${this.apiMahasiswaUrl}/${id}`, {headers}).subscribe({
         next: () => {
           console.log('Mahasiswa berhasil dihapus');
           this.getMahasiswa();
