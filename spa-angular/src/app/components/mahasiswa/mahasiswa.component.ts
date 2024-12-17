@@ -104,31 +104,32 @@ export class MahasiswaComponent implements OnInit {
   }
 
   editMahasiswa(mahasiswa: any): void {
-    this.isEditing = true;
-    const token = localStorage.getItem('authToken');
-    const headers = {Authorization: `Bearer ${token}`};
-    this.selectedMahasiswaId = mahasiswa._id;
-    this.mahasiswaForm.patchValue(mahasiswa);
+    if (this.selectedMahasiswaId && this.mahasiswaForm.valid) {
+      this.isEditing = true;
+      const token = localStorage.getItem('authToken');
+      const headers = {Authorization: `Bearer ${token}`};
+      this.selectedMahasiswaId = mahasiswa._id;
+      this.mahasiswaForm.patchValue(mahasiswa);
 
-    this.http.put(`${this.apiMahasiswaUrl}/${this.editMahasiswaId}`, this.mahasiswaForm.value, { headers }).subscribe({
-            next: (response) => {
-              console.log('Mahasiswa berhasil diperbarui:', response);
-              this.getMahasiswa(); 
-              this.isEditing = false;
-    
-              // Tutup modal edit setelah data berhasil diupdate
-              const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
-              if (modalElement) {
-                const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                modalInstance?.hide();
-              }
-            },
-            error: (err) => {
-              console.error('Error updating mahasiswa:', err);
-              this.isSubmitting = false;
-            },
-          });
-
+      this.http.put(`${this.apiMahasiswaUrl}/${this.editMahasiswaId}`, this.mahasiswaForm.value, { headers }).subscribe({
+              next: (response) => {
+                console.log('Mahasiswa berhasil diperbarui:', response);
+                this.getMahasiswa(); 
+                this.isEditing = false;
+      
+                // Tutup modal edit setelah data berhasil diupdate
+                const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
+                if (modalElement) {
+                  const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                  modalInstance?.hide();
+                }
+              },
+              error: (err) => {
+                console.error('Error updating mahasiswa:', err);
+                this.isSubmitting = false;
+              },
+            });
+          }
   }
 
   deleteMahasiswa(id: string): void {
