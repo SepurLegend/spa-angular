@@ -93,7 +93,7 @@ export class MahasiswaComponent implements OnInit {
           console.log('Mahasiswa berhasil disimpan:', response);
           this.getMahasiswa();
           this.resetForm();
-          this.closeModal('tambahMahasiswaModal');
+          this.closeModal('mahasiswaModalLabel');
         },
         error: (err) => {
           console.error('Error menyimpan mahasiswa:', err);
@@ -116,7 +116,7 @@ export class MahasiswaComponent implements OnInit {
           console.log('Mahasiswa berhasil diperbarui:', response);
           this.getMahasiswa(); // Refresh data Mahasiswa
           this.isEditing = false;
-          this.closeModal('tambahMahasiswaModal');
+          this.closeModal('mahasiswaModalLabel');
 
           // Tutup modal edit setelah data berhasil diupdate
           const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
