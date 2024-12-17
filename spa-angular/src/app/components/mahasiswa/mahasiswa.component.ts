@@ -115,7 +115,7 @@ export class MahasiswaComponent implements OnInit {
         next: (response) => {
           console.log('Mahasiswa berhasil diperbarui:', response);
           this.getMahasiswa(); // Refresh data Mahasiswa
-          this.isSubmitting = false;
+          this.isEditing = false;
 
           // Tutup modal edit setelah data berhasil diupdate
           const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
