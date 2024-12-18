@@ -68,7 +68,9 @@ export class MahasiswaComponent implements OnInit { // Mendeklarasikan class kom
   addMahasiswa(): void {
     if (this.mahasiswaForm.valid) {
       this.isSubmitting = true; // Mengaktifkan indikator pengiriman data.
-      this.http.post(this.apiMahasiswaUrl, this.mahasiswaForm.value).subscribe({
+      const token = localStorage.getItem('authToken');
+      const headers = {Authorization: `Bearer ${token}`};
+      this.http.post(this.apiMahasiswaUrl, this.mahasiswaForm.value, {headers}).subscribe({
         next: (response) => {
           console.log('Mahasiswa berhasil ditambahkan:', response);
           this.getMahasiswa(); // Refresh data mahasiswa setelah penambahan.
@@ -86,7 +88,9 @@ export class MahasiswaComponent implements OnInit { // Mendeklarasikan class kom
   // Method untuk menghapus mahasiswa
   deleteMahasiswa(_id: string): void {
     if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-      this.http.delete(`${this.apiMahasiswaUrl}/${_id}`).subscribe({
+      const token = localStorage.getItem('authToken');
+      const headers = {Authorization: `Bearer ${token}`};
+      this.http.delete(`${this.apiMahasiswaUrl}/${_id}`, {headers}).subscribe({
         next: () => {
           console.log(`Mahasiswa dengan ID ${_id} berhasil dihapus`);
           this.getMahasiswa(); // Refresh data mahasiswa setelah penghapusan.
@@ -126,7 +130,9 @@ export class MahasiswaComponent implements OnInit { // Mendeklarasikan class kom
   updateMahasiswa(): void {
     if (this.mahasiswaForm.valid && this.editMahasiswaId) {
       this.isSubmitting = true; // Aktifkan indikator pengiriman data
-      this.http.put(`${this.apiMahasiswaUrl}/${this.editMahasiswaId}`, this.mahasiswaForm.value).subscribe({
+      const token = localStorage.getItem('authToken');
+      const headers = {Authorization: `Bearer ${token}`};
+      this.http.put(`${this.apiMahasiswaUrl}/${this.editMahasiswaId}`, this.mahasiswaForm.value, {headers}).subscribe({
         next: (response) => {
           console.log('Mahasiswa berhasil diperbarui:', response);
           this.getMahasiswa(); // Refresh data mahasiswa
